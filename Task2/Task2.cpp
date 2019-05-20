@@ -12,34 +12,51 @@ int __fastcall CalculateDegree(unsigned int a, unsigned int b)
 	{
 		mov eax, a
 		mov ecx, b
+		
+		cmp ecx,1
+		jg _begin1
+		je _end
+
+		_zero :
+		mov eax, 1
+		jmp _end
+
+		_begin1 :
 		sub ecx, 1
 		_begin :
-		imul a
+		imul a		
 		loop _begin
 		_end :
+		
 		mov edx, b
 		mov result, eax
 	}
+
 	return result;
 }
 
-int __fastcall Task2(unsigned int n, unsigned int m)
+int  Task2(unsigned int n, unsigned int m)
 {
-	unsigned int result;
+    int result;
 	__asm
 	{
 		mov ecx, n
 		mov edx, m
 		mov ebx, 0
-		mov ebp, n
+		mov edi, n
+		cmp ecx,0
+		jg _begin
+		mov ebx,0
+		jmp _end
 
 		_begin :
 		call  CalculateDegree
-		mov ecx, ebp
-		sub ebp, 1
-		add ebx, eax
+		mov ecx, edi
+		sub edi, 1
+		add ebx, eax		
 		loop _begin
 		_end :
+
 		mov result, ebx
 
 	}
@@ -47,7 +64,7 @@ int __fastcall Task2(unsigned int n, unsigned int m)
 	return result;
 
 }
-
+ 
 
 
 
@@ -62,5 +79,7 @@ int main()
 
 	wcout << Task2(N, M);
 
+	std::wcin.get();
+	std::wcin.get();
 
 }

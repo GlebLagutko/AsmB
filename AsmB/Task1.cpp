@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int  FirstTask(int a,int b,int c)
+int __cdecl Calculate(int a, int b, int c)
 {
 	int result;
 
@@ -23,30 +23,43 @@ int  FirstTask(int a,int b,int c)
 
 		cmp eax, ebx
 		jg disc_pos
-		jz disc_neg
+		jz disc_zero
 
 		mov eax, 0
-		mov result,eax
+		mov result, eax
 		jmp _end
 
 		disc_pos :
-		 mov eax,2
-		 mov result,eax
-		 jmp _end
+		mov eax, 2
+			mov result, eax
+			jmp _end
 
-		disc_neg :
-		 mov eax, 1
-		 mov result, eax
-		 _end :
-
+			disc_zero :
+		mov eax, 1
+			mov result, eax
+			_end :
+		
 	}
 
-   	return result;
+	return result;
 }
 
+void  FirstTask(int a,int b,int c)
+{
+	unsigned int result;
 
+	__asm
+	{
+		push a
+		push b
+		push c
+		call Calculate
+		mov result, eax
+		add esp,12
 
-
+	}
+	wcout << L"Answer : " << result;
+}
 
 
 int main()
@@ -58,10 +71,11 @@ int main()
 	wcin >> a;
 	wcin >> b;
 	wcin >> c;
-	auto result = FirstTask(a, b, c);
-	//////////////////////////////
-	wcout <<L"Count : " << result << endl;
+	FirstTask(a, b, c);
+	
 	system("pause");
+	// a = c = 36864
+	// b = 34048
 
 
 
